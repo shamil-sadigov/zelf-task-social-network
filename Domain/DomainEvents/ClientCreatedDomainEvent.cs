@@ -1,4 +1,4 @@
-﻿using Domain.BuildingBlocks.BuildingBlocks;
+﻿using Domain.BuildingBlocks;
 using Domain.ValueObjects;
 
 namespace Domain.DomainEvents

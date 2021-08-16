@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Domain.BuildingBlocks.BuildingBlocks;
+using Domain.BuildingBlocks;
 
 namespace Domain.Tests.Helpers
 {

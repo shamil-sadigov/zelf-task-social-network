@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Domain.BuildingBlocks.BuildingBlocks;
+using Domain.BuildingBlocks;
 using Domain.Extensions;
 
 #endregion
@@ -12,6 +12,12 @@ namespace Domain.ValueObjects
 {
     public class ClientName : ValueObject
     {
+        // for EF
+        private ClientName()
+        {
+            
+        }
+        
         public ClientName(string name)
         {
             NameMustHaveValue(name);

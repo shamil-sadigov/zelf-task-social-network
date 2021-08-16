@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Domain.BuildingBlocks.BuildingBlocks;
+using Domain.BuildingBlocks;
 using Domain.Contracts;
 using Domain.DomainEvents;
 using Domain.Exceptions;
@@ -17,10 +17,10 @@ namespace Domain
     {
         private readonly IPopularityEvaluator _popularityEvaluator;
         
-        private readonly List<Subscriber> _subscribers = new();
+        private readonly List<ClientSubscriber> _subscribers = new();
         
-        private ClientName _clientName;
-        private ClientPopularity _clientPopularity;
+        private ClientName _name;
+        private ClientPopularity _popularity;
 
         // For EF
         private Client()
@@ -28,16 +28,16 @@ namespace Domain
             _popularityEvaluator = new SubscriptionBasedPopularityEvaluator(this);
         }
 
-        private Client(ClientName clientName) 
+        private Client(ClientName name) 
             : this()
         {
-            _clientName = clientName;
+            _name = name;
             Id = new ClientId(Guid.NewGuid());
             
-            AddDomainEvent(new ClientCreatedDomainEvent(Id, _clientName));
+            AddDomainEvent(new ClientCreatedDomainEvent(Id, _name));
         }
         
-        internal IReadOnlyList<Subscriber> Subscribers => _subscribers;
+        internal IReadOnlyList<ClientSubscriber> Subscribers => _subscribers;
         
         public ClientId Id { get; }
 
@@ -59,15 +59,15 @@ namespace Domain
 
             EvaluatePopularity();
             
-            AddDomainEvent(new ClientSubscribedDomainEvent(subscriber.Id, Id, _clientPopularity));
+            AddDomainEvent(new ClientSubscribedDomainEvent(subscriber.Id, Id, _popularity));
         }
 
         private void EvaluatePopularity() 
-            => _clientPopularity = _popularityEvaluator.Evaluate();
+            => _popularity = _popularityEvaluator.Evaluate();
 
         private void AddSubscriberInternal(Client subscriber)
         {
-            var subscription = Subscriber.Builder
+            var subscription = ClientSubscriber.Builder
                 .Subscribe(subscriber.Id)
                 .To(clientId: Id);
 

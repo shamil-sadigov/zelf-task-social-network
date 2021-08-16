@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Domain.BuildingBlocks.BuildingBlocks;
+using Domain.BuildingBlocks;
 using FluentAssertions;
 
 namespace Domain.Tests.Helpers

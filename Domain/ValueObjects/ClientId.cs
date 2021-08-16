@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using Domain.BuildingBlocks.BuildingBlocks;
+using Domain.BuildingBlocks;
 
 #endregion
 

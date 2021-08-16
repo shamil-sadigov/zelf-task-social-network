@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Domain.BuildingBlocks.BuildingBlocks;
+using Domain.BuildingBlocks;
 
 namespace Domain.ValueObjects
 {
