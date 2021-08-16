@@ -1,16 +1,16 @@
-﻿using Domain.BuildingBlocks.BuildingBlocks;
+﻿using Domain.BuildingBlocks;
 
 namespace Domain.ValueObjects
 {
-    public class Subscriber:Entity
+    public class ClientSubscriber:Entity
     {
         // For EF
-        private Subscriber()
+        private ClientSubscriber()
         {
             
         }
         
-        private Subscriber(ClientId subscriberId, ClientId clientId)
+        private ClientSubscriber(ClientId subscriberId, ClientId clientId)
         {
             SubscriberId = subscriberId;
             ClientId = clientId;
@@ -30,7 +30,7 @@ namespace Domain.ValueObjects
             public static Builder Subscribe(ClientId subscriber)
                 => new(subscriber);
 
-            public Subscriber To(ClientId clientId)
+            public ClientSubscriber To(ClientId clientId)
                 => new(_subscriber, clientId);
         }
     }
