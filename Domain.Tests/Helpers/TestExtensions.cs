@@ -5,7 +5,7 @@ using FluentAssertions.Specialized;
 
 #endregion
 
-namespace Domain.Tests
+namespace Domain.Tests.Helpers
 {
     public static class TestExtensions
     {
