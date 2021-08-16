@@ -5,7 +5,7 @@ using System.Linq;
 
 #endregion
 
-namespace Domain
+namespace Domain.BuildingBlocks.BuildingBlocks
 {
     public abstract class ValueObject
     {
