@@ -3,6 +3,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Domain.BuildingBlocks.BuildingBlocks;
+using Domain.Extensions;
 
 #endregion
 
@@ -12,26 +14,26 @@ namespace Domain.ValueObjects
     {
         public ClientName(string name)
         {
-            EnsureHasValue(name);
+            NameMustHaveValue(name);
 
             var trimmedName = name.Trim();
 
-            EnsureNameHasValidLength(trimmedName);
+            NameMustHaveValidLength(trimmedName);
 
-            EnsureNameContainsValidSymbols(trimmedName);
+            NameMustContainValidCharacters(trimmedName);
 
             Value = trimmedName;
         }
 
         public string Value { get; }
 
-        private static void EnsureHasValue(string name)
+        private static void NameMustHaveValue(string name)
         {
             if (name.IsNullOrWhiteSpace())
                 throw new ArgumentNullException(nameof(name));
         }
 
-        private static void EnsureNameContainsValidSymbols(string name)
+        private static void NameMustContainValidCharacters(string name)
         {
             var nameContainsLetter = false;
 
@@ -53,10 +55,10 @@ namespace Domain.ValueObjects
                 throw new ArgumentException("Must contain at least one letter", nameof(name));
         }
 
-        private static void EnsureNameHasValidLength(string name)
+        private static void NameMustHaveValidLength(string name)
         {
-            if (name.Length < 3)
-                throw new ArgumentException("Must have at least 3 characters", nameof(name));
+            if (name.Length is < 2 or > 64)
+                throw new ArgumentException("Name length should be between 2 and 64", nameof(name));
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
