@@ -38,16 +38,15 @@ namespace WebApi.Controllers
 
             var result = await _mediator.Send(new GetClientQuery(createdClientId));
 
-            var response = MapToResponse(result!);
+            ClientResponse? response = MapToResponse(result!);
 
             return CreatedAtAction(
-                nameof(GetClientAsync),
+                "GetClient",
                 new {id = createdClientId},
                 response);
         }
-
-
-
+        
+        [ActionName("GetClient")]
         [HttpGet("{id:guid}")]
         [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(ClientResponse))]
         public async Task<ActionResult<ClientResponse>> GetClientAsync([FromQuery] Guid id)
@@ -67,7 +66,7 @@ namespace WebApi.Controllers
         [ProducesResponseType((int) HttpStatusCode.NotFound)]
         [ProducesResponseType((int) HttpStatusCode.Conflict)]
         public async Task<IActionResult> AddClientSubscriberAsync(
-            [FromQuery] Guid id,
+            Guid id,
             [FromBody] AddClientSubscriberRequest request)
         {
             await _mediator.Send(new AddClientSubscriberCommand
