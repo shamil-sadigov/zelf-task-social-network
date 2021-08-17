@@ -1,6 +1,8 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
+using Domain.DomainEvents;
 using MediatR;
 
 #endregion

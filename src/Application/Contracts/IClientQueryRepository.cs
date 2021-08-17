@@ -11,7 +11,8 @@ namespace Application.Contracts
 {
     public interface IClientQueryRepository
     {
-        Task<List<ClientDto>> GetTopPopularAsync(ushort limit);
+        Task<List<ClientDto>?> GetTopPopularAsync(ushort limit);
+        Task<List<ClientDto>?> GetClientSubscribersAsync(Guid clientId);
         Task<ClientDto?> GetByIdAsync(Guid clientId);
     }
 }

@@ -21,7 +21,7 @@ namespace Infrastructure.Database.Implementations
             _sqlConnectionFactory = sqlConnectionFactory;
         }
 
-        public async Task<List<ClientDto>> GetTopPopularAsync(ushort limit)
+        public async Task<List<ClientDto>?> GetTopPopularAsync(ushort limit)
         {
             var connection = _sqlConnectionFactory.GetOrCreateConnection();
 
@@ -33,9 +33,7 @@ namespace Infrastructure.Database.Implementations
                     Limit = limit
                 });
 
-            return clients
-                .Select(x => MapToDto(x))
-                .ToList();
+            return clients is null ? null : MapToDtos(clients);
         }
 
         public async Task<ClientDto?> GetByIdAsync(Guid clientId)
@@ -52,6 +50,23 @@ namespace Infrastructure.Database.Implementations
 
             return result is null ? null : MapToDto(result);
         }
+        
+        public async Task<List<ClientDto>?> GetClientSubscribersAsync(Guid clientId)
+        {
+            var connection = _sqlConnectionFactory.GetOrCreateConnection();
+
+            var clients = await connection.QueryAsync<ClientDbModel>(
+                "SELECT [Id], [Name], [Popularity] FROM Clients " +
+                "INNER JOIN ClientSubscribers ON ClientSubscribers.[ClientId]=Clients.[Id] " +
+                "WHERE Clients.[Id]=@ClientId", new
+                {
+                    ClientId = clientId.ToString().ToUpper()
+                });
+            
+            return clients is null ? null : MapToDtos(clients);
+        }
+
+        
 
         private static ClientDto MapToDto(ClientDbModel model)
             => new
@@ -61,6 +76,13 @@ namespace Infrastructure.Database.Implementations
                 model.Popularity
             );
 
+        private static List<ClientDto> MapToDtos(IEnumerable<ClientDbModel> clients)
+        {
+            return clients
+                .Select(x => MapToDto(x))
+                .ToList();
+        }
+        
         private class ClientDbModel
         {
             public string Id { get; set; }

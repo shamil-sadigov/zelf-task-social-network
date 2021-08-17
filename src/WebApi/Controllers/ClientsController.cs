@@ -8,6 +8,7 @@ using Application.Commands.AddSubscriberCommand;
 using Application.Commands.CreateClient;
 using Application.Queries;
 using Application.Queries.GetClient;
+using Application.Queries.GetClientSubscribers;
 using Application.Queries.GetTopPopularClients;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -77,10 +78,26 @@ namespace WebApi.Controllers
 
             return Ok();
         }
+        
+        
+        [HttpGet("{id:guid}/subscribers")]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
+        public async Task<ClientsResponse> GetClientSubscriberAsync(Guid id)
+        {
+            var result = await _mediator.Send(new GetClientSubscribersQuery(id));
 
+            var clients = result
+                .Select(x => MapToResponse(x))
+                .ToList();
+
+            var response = new ClientsResponse(clients);
+
+            return response;
+        }
+        
         [HttpGet("top-popular/{limit:int?}")]
-        [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(TopPopularClientsResponse))]
-        public async Task<TopPopularClientsResponse> GetTopPopularClientsAsync(ushort? limit = null)
+        [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(ClientsResponse))]
+        public async Task<ClientsResponse> GetTopPopularClientsAsync(ushort? limit = null)
         {
             var result = await _mediator.Send(new GetTopPopularClientsQuery(limit));
 
@@ -88,7 +105,7 @@ namespace WebApi.Controllers
                 .Select(x => MapToResponse(x))
                 .ToList();
 
-            var response = new TopPopularClientsResponse(clients);
+            var response = new ClientsResponse(clients);
 
             return response;
         }
