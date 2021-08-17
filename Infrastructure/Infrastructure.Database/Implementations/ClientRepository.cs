@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 #endregion
 
-namespace Infrastructure.Database.Repositories
+namespace Infrastructure.Database.Implementations
 {
     public class ClientRepository : IClientRepository
     {
@@ -24,5 +24,8 @@ namespace Infrastructure.Database.Repositories
             => await _context.Clients
                 .Include("_subscribers")
                 .FirstOrDefaultAsync(x=> x.Id == clientId);
+
+        public void Update(Client client) 
+            => _context.Entry(client).CurrentValues.SetValues(client);
     }
 }

@@ -7,5 +7,6 @@ namespace Domain.Contracts
     {
         Task AddAsync(Client client);
         Task<Client> GetAsync(ClientId clientId);
+        void Update(Client client);
     }
 }
