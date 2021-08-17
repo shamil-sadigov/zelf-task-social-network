@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Contracts;
 using Application.Queries;
 using Application.Queries.GetTopPopularClients;
 using Dapper;

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Application.Queries;
 
-namespace Application.Queries
+namespace Application.Contracts
 {
     public interface IClientQueryRepository
     {
