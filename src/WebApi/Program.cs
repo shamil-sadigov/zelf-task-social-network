@@ -1,6 +1,10 @@
 #region
 
+using System.Threading.Tasks;
+using Infrastructure.Database;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 #endregion
@@ -9,9 +13,17 @@ namespace WebApi
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+
+            using (var serviceScope = host.Services.CreateScope())
+            await using (var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationContext>())
+            {
+                await dbContext.Database.MigrateAsync();
+            }
+            
+            await host.RunAsync();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
