@@ -1,7 +1,7 @@
 using System;
 using System.Data;
 
-namespace Infrastructure.Database.Implementations
+namespace Infrastructure.Database
 {
     public interface ISqlConnectionFactory : IDisposable
     {

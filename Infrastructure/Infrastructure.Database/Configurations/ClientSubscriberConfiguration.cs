@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Database.Configurations
 {
-    public class SubscriberConfiguration : IEntityTypeConfiguration<ClientSubscriber>
+    public class ClientSubscriberConfiguration : IEntityTypeConfiguration<ClientSubscriber>
     {
         public void Configure(EntityTypeBuilder<ClientSubscriber> builder)
         {
