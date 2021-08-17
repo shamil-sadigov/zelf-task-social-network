@@ -49,7 +49,7 @@ namespace WebApi.Controllers
         [ActionName("GetClient")]
         [HttpGet("{id:guid}")]
         [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(ClientResponse))]
-        public async Task<ActionResult<ClientResponse>> GetClientAsync([FromQuery] Guid id)
+        public async Task<ActionResult<ClientResponse>> GetClientAsync(Guid id)
         {
             var result = await _mediator.Send(new GetClientQuery(id));
 
@@ -80,7 +80,7 @@ namespace WebApi.Controllers
 
         [HttpGet("top-popular/{limit:int?}")]
         [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(TopPopularClientsResponse))]
-        public async Task<TopPopularClientsResponse> GetTopPopularClientsAsync(ushort? limit)
+        public async Task<TopPopularClientsResponse> GetTopPopularClientsAsync(ushort? limit = null)
         {
             var result = await _mediator.Send(new GetTopPopularClientsQuery(limit));
 
