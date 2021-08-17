@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 
 #endregion
 
-namespace WebApi
+namespace WebApi.Extensions
 {
     public static class HostEnvironmentExtensions
     {

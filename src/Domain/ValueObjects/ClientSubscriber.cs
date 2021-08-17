@@ -19,6 +19,9 @@ namespace Domain.ValueObjects
             ClientId = clientId;
         }
 
+        /// <summary>
+        /// The one who subscribed to <see cref="ClientId"/> 
+        /// </summary>
         public ClientId SubscriberId { get; }
 
         public ClientId ClientId { get; }

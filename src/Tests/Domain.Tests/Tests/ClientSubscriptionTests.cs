@@ -87,6 +87,7 @@ namespace Domain.Tests.Tests
             // Act
             Action addingTheSameSubscriber = () => client.AddSubscriber(subscriber);
 
+            // Assert
             addingTheSameSubscriber.Should()
                 .Throw<DuplicateSubscriberException>();
         }
