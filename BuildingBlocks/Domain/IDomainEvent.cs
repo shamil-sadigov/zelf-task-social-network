@@ -1,7 +1,7 @@
 ﻿using System;
 using MediatR;
 
-namespace Domain.BuildingBlocks.BuildingBlocks
+namespace Domain.BuildingBlocks
 {
     public interface IDomainEvent : INotification
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Domain.BuildingBlocks.BuildingBlocks
+namespace Domain.BuildingBlocks
 {
     public record DomainEventBase : IDomainEvent
     {

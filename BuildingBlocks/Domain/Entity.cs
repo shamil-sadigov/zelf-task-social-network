@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Domain.BuildingBlocks.BuildingBlocks
+namespace Domain.BuildingBlocks
 {
     public abstract class Entity
     {
