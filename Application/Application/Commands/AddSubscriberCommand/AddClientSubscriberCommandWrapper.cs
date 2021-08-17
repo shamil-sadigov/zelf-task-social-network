@@ -2,9 +2,9 @@ using Domain.ValueObjects;
 
 namespace Application.Commands.AddSubscriberCommand
 {
-    internal record AddSubscriberCommandWrapper
+    internal record AddClientSubscriberCommandWrapper
     {
-        public AddSubscriberCommandWrapper(AddSubscriberCommand command)
+        public AddClientSubscriberCommandWrapper(AddClientSubscriberCommand command)
         {
             SubscriberId = new ClientId(command.SubscriberId);
             ClientId = new ClientId(command.ClientId);

@@ -7,20 +7,20 @@ using MediatR;
 
 namespace Application.Commands.AddSubscriberCommand
 {
-    public class AddSubscriberCommandHandler:IRequestHandler<AddSubscriberCommand>
+    public class AddClientSubscriberCommandHandler:IRequestHandler<AddClientSubscriberCommand>
     {
         private readonly IClientRepository _clientRepository;
         private readonly IClientCounter _clientCounter;
 
-        public AddSubscriberCommandHandler(IClientRepository clientRepository, IClientCounter clientCounter)
+        public AddClientSubscriberCommandHandler(IClientRepository clientRepository, IClientCounter clientCounter)
         {
             _clientRepository = clientRepository;
             _clientCounter = clientCounter;
         }
         
-        public async Task<Unit> Handle(AddSubscriberCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(AddClientSubscriberCommand request, CancellationToken cancellationToken)
         {
-            var command = new AddSubscriberCommandWrapper(request);
+            var command = new AddClientSubscriberCommandWrapper(request);
 
             var client = await FindClientAsync(command.ClientId);
             var subscriber = await FindClientAsync(command.SubscriberId);
