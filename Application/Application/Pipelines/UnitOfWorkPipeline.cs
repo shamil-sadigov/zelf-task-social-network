@@ -2,6 +2,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Commands;
 using Application.Contracts;
 using MediatR;
 
@@ -10,7 +11,7 @@ using MediatR;
 namespace Application.Pipelines
 {
     public class UnitOfWorkPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : notnull
+        where TRequest : ICommand<TResponse>
     {
         private readonly IDomainEventsPublisher _domainEventsPublisher;
         private readonly IUnitOfWork _unitOfWork;

@@ -46,12 +46,11 @@ namespace WebApi.IntegrationTests.Tests
 
             clientDto!.Name.Should().Be(clientName);
         }
-
-
+        
         [Fact]
-        public async Task POST_Add_subscriber_to_client()
+        public async Task POST_Adds_subscriber_to_client()
         {
-            var client = await CreateClientAsync("Gordon Lightfoot");
+            var client = await CreateClientAsync("Eric Clapton");
             var subscriber = await CreateClientAsync("Fleetwood mac");
 
             var clientSeeder = new ClientSeeder(client, subscriber);

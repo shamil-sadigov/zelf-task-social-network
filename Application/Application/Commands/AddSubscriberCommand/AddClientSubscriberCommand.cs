@@ -7,5 +7,5 @@ using MediatR;
 
 namespace Application.Commands.AddSubscriberCommand
 {
-    public record AddClientSubscriberCommand(Guid SubscriberId, Guid ClientId) : IRequest<Unit>;
+    public record AddClientSubscriberCommand(Guid SubscriberId, Guid ClientId) : ICommand<Unit>;
 }
