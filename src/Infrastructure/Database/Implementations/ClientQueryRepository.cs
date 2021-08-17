@@ -27,9 +27,8 @@ namespace Infrastructure.Database.Implementations
 
             var clients = await connection.QueryAsync<ClientDbModel>(
                 "SELECT [Id], [Name], [Popularity]" +
-                "FROM Clients" +
-                "ORDER BY [Popularity]" +
-                "LIMIT @Limit", new
+                "FROM Clients " +
+                "ORDER BY [Popularity] DESC LIMIT @Limit", new
                 {
                     Limit = limit
                 });

@@ -80,7 +80,7 @@ namespace WebApi.Controllers
 
         [HttpGet("top-popular/{limit:int?}")]
         [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(TopPopularClientsResponse))]
-        public async Task<TopPopularClientsResponse> GetTopPopularClientsAsync([FromQuery] ushort? limit)
+        public async Task<TopPopularClientsResponse> GetTopPopularClientsAsync(ushort? limit)
         {
             var result = await _mediator.Send(new GetTopPopularClientsQuery(limit));
 
