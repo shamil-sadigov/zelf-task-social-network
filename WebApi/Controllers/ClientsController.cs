@@ -34,15 +34,9 @@ namespace WebApi.Controllers
         [ProducesResponseType((int) HttpStatusCode.Conflict)]
         public async Task<IActionResult> CreateClientAsync([FromBody] CreateClientRequest request)
         {
-            var createdClientId = await _mediator.Send(new CreateClientCommand
-            (
-                request.ClientName
-            ));
+            var createdClientId = await _mediator.Send(new CreateClientCommand(request.ClientName));
 
-            var result = await _mediator.Send(new GetClientQuery
-            (
-                createdClientId
-            ));
+            var result = await _mediator.Send(new GetClientQuery(createdClientId));
 
             var response = MapToResponse(result!);
 
@@ -58,10 +52,7 @@ namespace WebApi.Controllers
         [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(ClientResponse))]
         public async Task<ActionResult<ClientResponse>> GetClientAsync([FromQuery] Guid id)
         {
-            var result = await _mediator.Send(new GetClientQuery
-            (
-                id
-            ));
+            var result = await _mediator.Send(new GetClientQuery(id));
 
             if (result is null)
                 return NotFound();
@@ -75,16 +66,16 @@ namespace WebApi.Controllers
         [ProducesResponseType((int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.NotFound)]
         [ProducesResponseType((int) HttpStatusCode.Conflict)]
-        public async Task<IActionResult> AddSubscriberToClientAsync(
+        public async Task<IActionResult> AddClientSubscriberAsync(
             [FromQuery] Guid id,
-            [FromBody] AddSubscriberRequest request)
+            [FromBody] AddClientSubscriberRequest request)
         {
-            await _mediator.Send(new AddSubscriberCommand
+            await _mediator.Send(new AddClientSubscriberCommand
             (
                 request.SubscriberId,
                 ClientId: id
             ));
-
+            
             return Ok();
         }
 
@@ -92,10 +83,7 @@ namespace WebApi.Controllers
         [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(TopPopularClientsResponse))]
         public async Task<TopPopularClientsResponse> GetTopPopularClientsAsync([FromQuery] ushort? limit)
         {
-            var result = await _mediator.Send(new GetTopPopularClientsQuery
-            (
-                limit
-            ));
+            var result = await _mediator.Send(new GetTopPopularClientsQuery(limit));
 
             var clients = result
                 .Select(x => MapToResponse(x))
