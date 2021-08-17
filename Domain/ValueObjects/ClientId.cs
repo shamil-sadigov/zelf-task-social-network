@@ -21,5 +21,11 @@ namespace Domain.ValueObjects
         {
             yield return Value;
         }
+
+        public static implicit operator Guid(ClientId clientId) 
+            => clientId.Value;
+
+        public override string ToString() 
+            => Value.ToString();
     }
 }
