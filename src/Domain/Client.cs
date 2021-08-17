@@ -86,12 +86,14 @@ namespace Domain
 
         private void SubscriberMustBeUnique(ClientId subscriber)
         {
-            var subscriptionExists = _subscribers
-                .Any(x => x.SubscriberId == subscriber
-                          && x.ClientId == Id);
+            var subscriberExists = _subscribers
+                .Any(x => x.SubscriberId == subscriber 
+                       && x.ClientId == Id);
 
-            if (subscriptionExists)
+            if (subscriberExists)
                 throw new DuplicateSubscriberException(subscriber, Id);
         }
+        
+        
     }
 }
