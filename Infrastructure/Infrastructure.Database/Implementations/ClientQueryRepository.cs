@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Queries;
@@ -28,6 +29,21 @@ namespace Infrastructure.Database.Implementations
                 });
 
             return clients.ToList();
+        }
+
+        public async Task<ClientDto?> GetByIdAsync(Guid clientId)
+        {
+            var connection = _sqlConnectionFactory.GetOrCreateConnection();
+
+            var result  = await connection.QuerySingleOrDefaultAsync<ClientDto>(
+                "SELECT Id, Name, Popularity"+
+                "FROM clients" +
+                "WHERE Id=@ClientId", new
+                {
+                    ClientId = clientId,
+                });
+
+            return result;
         }
     }
 }

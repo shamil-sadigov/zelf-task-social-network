@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Application.Queries
@@ -6,5 +7,6 @@ namespace Application.Queries
     public interface IClientQueryRepository
     {
         Task<List<ClientDto>> GetTopPopularAsync(ushort limit);
+        Task<ClientDto?> GetByIdAsync(Guid clientId);
     }
 }
