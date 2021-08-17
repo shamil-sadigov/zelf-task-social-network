@@ -54,20 +54,23 @@ namespace Infrastructure.Database.Implementations
         public async Task<List<ClientDto>?> GetClientSubscribersAsync(Guid clientId)
         {
             var connection = _sqlConnectionFactory.GetOrCreateConnection();
-
+            
             var clients = await connection.QueryAsync<ClientDbModel>(
-                "SELECT [Id], [Name], [Popularity] FROM Clients " +
-                "INNER JOIN ClientSubscribers ON ClientSubscribers.[ClientId]=Clients.[Id] " +
-                "WHERE Clients.[Id]=@ClientId", new
+                @"WITH Subscribers(SubscriberId) AS
+                 (
+                    SELECT [SubscriberId] FROM ClientSubscribers
+                    WHERE [ClientId]=@ClientId
+                 )
+                
+                  SELECT [Id], [Name], [Popularity] FROM Clients
+                  INNER JOIN Subscribers ON [SubscriberId]=[Id]", new
                 {
                     ClientId = clientId.ToString().ToUpper()
                 });
             
             return clients is null ? null : MapToDtos(clients);
         }
-
         
-
         private static ClientDto MapToDto(ClientDbModel model)
             => new
             (
