@@ -2,13 +2,13 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+
         <IsPackable>false</IsPackable>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="FluentAssertions" Version="6.0.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="5.0.9" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
         <PackageReference Include="NSubstitute" Version="4.2.2" />
         <PackageReference Include="xunit" Version="2.4.1" />
@@ -23,17 +23,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Application\Application\Application.csproj" />
-      <ProjectReference Include="..\Infrastructure\Infrastructure.Database\Infrastructure.Database.csproj" />
-      <ProjectReference Include="..\WebApi\WebApi.csproj" />
+      <ProjectReference Include="..\..\BuildingBlocks\Domain\Domain.BuildingBlocks.csproj" />
+      <ProjectReference Include="..\..\Domain\Domain.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-        <Content Include="appsettings.testing.json">
-            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-        </Content>
-    </ItemGroup>
-
+    
 </Project>
