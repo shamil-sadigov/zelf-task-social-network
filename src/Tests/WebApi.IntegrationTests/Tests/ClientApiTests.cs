@@ -41,7 +41,7 @@ namespace WebApi.IntegrationTests.Tests
             var httpResponse = await clientApi.CreateClientAsync(clientName);
 
             // Assert
-            httpResponse.StatusCode.Should().Be(HttpStatusCode.Created);
+            httpResponse.ShouldBe201();
 
             var clientDto = await httpResponse.Content.ReadFromJsonAsync<ClientResponse>();
 
@@ -57,26 +57,22 @@ namespace WebApi.IntegrationTests.Tests
             var subscriber2 = await CreateClientAsync("Jim Croce");
 
             var clientSeeder = new ClientSeeder(client, subscriber1, subscriber2);
-
             
             HttpClient clientApi = _webApiFactory
                 .WithPredefinedData(clientSeeder)
                 .CreateDefaultClient(new Uri(ClientsApiPath.BaseUrl));
 
             // Act
-            var addFirstSubscriber = await clientApi.AddClientSubscriberAsync(client.Id, subscriber1.Id);
-            var addSecondSubscriber = await clientApi.AddClientSubscriberAsync(client.Id, subscriber2.Id);
+            var addFirstSubscriberResponse = await clientApi.AddClientSubscriberAsync(client.Id, subscriber1.Id);
+            var addSecondSubscriberResponse = await clientApi.AddClientSubscriberAsync(client.Id, subscriber2.Id);
 
             // Assert
-            addFirstSubscriber.StatusCode.Should()
-                .Be(HttpStatusCode.OK);
-            
-            addSecondSubscriber.StatusCode.Should()
-                .Be(HttpStatusCode.OK);
+            addFirstSubscriberResponse.ShouldBe200();
+            addSecondSubscriberResponse.ShouldBe200();
             
             var response = await clientApi.GetClientSubscriberAsync(client.Id);
 
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            response.ShouldBe200();
 
             var subscribersResponse = await response.Content.ReadFromJsonAsync<ClientsResponse>();
 
@@ -84,9 +80,8 @@ namespace WebApi.IntegrationTests.Tests
 
             clientSubscribers
                 .Should()
-                .HaveCount(2);
-
-            clientSubscribers.Should()
+                .HaveCount(2)
+                .And
                 .Satisfy
                 (
                     firstSubscriber => firstSubscriber.Name == "Fleetwood mac",
