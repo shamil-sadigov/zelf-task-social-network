@@ -1,22 +1,22 @@
 ﻿#region
 
-using System;
+using System.Drawing;
 using Domain.ValueObjects;
 
 #endregion
 
 namespace Domain.Exceptions
 {
-    public class DuplicateSubscriberException : ApplicationException
+    public class DuplicateSubscriberException : DomainExceptionBase
     {
-        public DuplicateSubscriberException(ClientId subscriber, ClientId clientId)
-            : base($"Client '{subscriber}' has been already subscribed to '{clientId}'")
+        public DuplicateSubscriberException(ClientId subscriberId, ClientId clientId)
+            : base($"Client '{subscriberId}' has been already subscribed to '{clientId}'")
         {
-            Subscriber = subscriber;
+            SubscriberId = subscriberId;
             ClientId = clientId;
         }
 
-        public ClientId Subscriber { get; }
+        public ClientId SubscriberId { get; }
         public ClientId ClientId { get; }
     }
 }
