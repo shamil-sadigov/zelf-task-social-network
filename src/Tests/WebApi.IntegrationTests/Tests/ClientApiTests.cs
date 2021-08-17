@@ -1,6 +1,7 @@
 #region
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -29,7 +30,7 @@ namespace WebApi.IntegrationTests.Tests
         }
 
         [Fact]
-        public async Task POST_Creates_new_client()
+        public async Task Can_create_new_client()
         {
             // Arrange
             HttpClient clientApi = _webApiFactory.CreateDefaultClient(new Uri(ClientsApiPath.BaseUrl));
@@ -48,22 +49,49 @@ namespace WebApi.IntegrationTests.Tests
         }
         
         [Fact]
-        public async Task POST_Adds_subscriber_to_client()
+        public async Task Can_add_subscribers_to_client()
         {
-            var client = await CreateClientAsync("Eric Clapton");
-            var subscriber = await CreateClientAsync("Fleetwood mac");
-
-            var clientSeeder = new ClientSeeder(client, subscriber);
-
             // Arrange
+            var client = await CreateClientAsync("Eric Clapton");
+            var subscriber1 = await CreateClientAsync("Fleetwood mac");
+            var subscriber2 = await CreateClientAsync("Jim Croce");
+
+            var clientSeeder = new ClientSeeder(client, subscriber1, subscriber2);
+
+            
             HttpClient clientApi = _webApiFactory
                 .WithPredefinedData(clientSeeder)
                 .CreateDefaultClient(new Uri(ClientsApiPath.BaseUrl));
 
             // Act
-            HttpResponseMessage httpResponse = await clientApi.AddClientSubscriberAsync(client.Id, subscriber.Id);
+            var addFirstSubscriber = await clientApi.AddClientSubscriberAsync(client.Id, subscriber1.Id);
+            var addSecondSubscriber = await clientApi.AddClientSubscriberAsync(client.Id, subscriber2.Id);
 
-            httpResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+            // Assert
+            addFirstSubscriber.StatusCode.Should()
+                .Be(HttpStatusCode.OK);
+            
+            addSecondSubscriber.StatusCode.Should()
+                .Be(HttpStatusCode.OK);
+            
+            var response = await clientApi.GetClientSubscriberAsync(client.Id);
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var subscribersResponse = await response.Content.ReadFromJsonAsync<ClientsResponse>();
+
+            var clientSubscribers = subscribersResponse.Items;
+
+            clientSubscribers
+                .Should()
+                .HaveCount(2);
+
+            clientSubscribers.Should()
+                .Satisfy
+                (
+                    firstSubscriber => firstSubscriber.Name == "Fleetwood mac",
+                    secondSubscriber => secondSubscriber.Name == "Jim Croce"
+                );
         }
 
         // TODO: Add additional tests to get top popular clients

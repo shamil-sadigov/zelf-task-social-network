@@ -36,5 +36,13 @@ namespace WebApi.IntegrationTests.Extensions
 
             return response;
         }
+        
+        public static async Task<HttpResponseMessage> GetClientSubscriberAsync(
+            this HttpClient httpClient,
+            Guid clientId)
+        {
+            return await httpClient.GetAsync(ClientsApiPath.ClientSubscribersPath(clientId));
+        }
+        
     }
 }
