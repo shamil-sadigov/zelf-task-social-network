@@ -20,11 +20,5 @@ namespace Infrastructure.Database
         {
             modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
         }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            // TODO: Remove this and configure all via Startup
-            optionsBuilder.UseSqlite("Data Source=AppDb");
-        }
     }
 }

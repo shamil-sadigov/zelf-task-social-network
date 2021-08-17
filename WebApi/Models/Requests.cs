@@ -5,5 +5,5 @@ namespace WebApi.Models
 {
     public record CreateClientRequest(string ClientName);
     
-    public record AddSubscriberRequest(Guid SubscriberId);
+    public record AddClientSubscriberRequest(Guid SubscriberId);
 }
