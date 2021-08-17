@@ -17,7 +17,7 @@ namespace WebApi.IntegrationTests
     {
         private IDataSeeder? _dataSeeder;
 
-        public ClientsWebApplicationFactory WithPredefinedData(IDataSeeder dataSeeder)
+        public ClientsWebApplicationFactory WithSeededData(IDataSeeder dataSeeder)
         {
             _dataSeeder = dataSeeder;
             return this;

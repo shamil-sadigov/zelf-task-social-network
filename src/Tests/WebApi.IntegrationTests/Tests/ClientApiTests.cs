@@ -59,7 +59,7 @@ namespace WebApi.IntegrationTests.Tests
             var clientSeeder = new ClientSeeder(client, subscriber1, subscriber2);
             
             HttpClient clientApi = _webApiFactory
-                .WithPredefinedData(clientSeeder)
+                .WithSeededData(clientSeeder)
                 .CreateDefaultClient(new Uri(ClientsApiPath.BaseUrl));
 
             // Act
