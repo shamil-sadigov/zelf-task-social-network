@@ -55,11 +55,21 @@ namespace Domain
         {
             SubscriberMustBeUnique(subscriber.Id);
 
+            SubscriberMustNotSubscribeToItself(subscriber);
+            
             AddSubscriberInternal(subscriber);
 
             EvaluatePopularity();
 
             AddDomainEvent(new ClientSubscribedDomainEvent(subscriber.Id, Id, _popularity));
+        }
+
+        private void SubscriberMustNotSubscribeToItself(Client subscriber)
+        {
+            if (subscriber.Id == Id)
+                throw new InvalidSubscriberException(
+                    subscriber.Id,
+                    $"Client '{subscriber.Id}'cannot subscribe to itself");
         }
 
         private void EvaluatePopularity()

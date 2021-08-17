@@ -91,6 +91,22 @@ namespace Domain.Tests.Tests
             addingTheSameSubscriber.Should()
                 .Throw<DuplicateSubscriberException>();
         }
+        
+        
+        [Fact]
+        public async Task Cannot_subscribe_client_to_itself()
+        {
+            // Arrange
+            var client = await CreateClientAsync();
+            
+            // Act
+            Action addingTheSameSubscriber = () => client.AddSubscriber(client);
+
+            // Assert
+            addingTheSameSubscriber.Should()
+                .Throw<InvalidSubscriberException>();
+        }
+
 
         #region Helpers
 
