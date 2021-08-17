@@ -27,14 +27,14 @@ namespace Domain.Tests.Tests
             clientCounter.CountByNameAsync(clientName).Returns(1);
 
             // Act
-            Action clientCreation = () =>
+            Func<Task> clientCreation = async () =>
             {
-                var client = Client.CreateWithNameAsync(clientName, clientCounter);
+                var client = await Client.CreateWithNameAsync(clientName, clientCounter);
             };
 
             // Assert
             clientCreation.Should()
-                .Throw<DuplicateClientNameException>();
+                .ThrowAsync<DuplicateClientNameException>();
         }
 
         [Fact]
