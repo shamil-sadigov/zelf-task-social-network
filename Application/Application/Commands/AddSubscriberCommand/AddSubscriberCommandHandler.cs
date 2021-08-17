@@ -1,27 +1,26 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Application.Commands.CreateClient;
 using Domain;
 using Domain.Contracts;
 using Domain.ValueObjects;
 using MediatR;
 
-namespace Application.Commands.SubscribeToClient
+namespace Application.Commands.AddSubscriberCommand
 {
-    public class SubscribeToClientCommandHandler:IRequestHandler<SubscribeToClientCommand>
+    public class AddSubscriberCommandHandler:IRequestHandler<AddSubscriberCommand>
     {
         private readonly IClientRepository _clientRepository;
         private readonly IClientCounter _clientCounter;
 
-        public SubscribeToClientCommandHandler(IClientRepository clientRepository, IClientCounter clientCounter)
+        public AddSubscriberCommandHandler(IClientRepository clientRepository, IClientCounter clientCounter)
         {
             _clientRepository = clientRepository;
             _clientCounter = clientCounter;
         }
         
-        public async Task<Unit> Handle(SubscribeToClientCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(AddSubscriberCommand request, CancellationToken cancellationToken)
         {
-            var command = new SubscribeToClientCommandWrapper(request);
+            var command = new AddSubscriberCommandWrapper(request);
 
             var client = await FindClientAsync(command.ClientId);
             var subscriber = await FindClientAsync(command.SubscriberId);

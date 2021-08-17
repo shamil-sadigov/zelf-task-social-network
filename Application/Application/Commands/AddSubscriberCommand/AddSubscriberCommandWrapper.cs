@@ -1,10 +1,10 @@
 using Domain.ValueObjects;
 
-namespace Application.Commands.SubscribeToClient
+namespace Application.Commands.AddSubscriberCommand
 {
-    internal record SubscribeToClientCommandWrapper
+    internal record AddSubscriberCommandWrapper
     {
-        public SubscribeToClientCommandWrapper(SubscribeToClientCommand command)
+        public AddSubscriberCommandWrapper(AddSubscriberCommand command)
         {
             SubscriberId = new ClientId(command.SubscriberId);
             ClientId = new ClientId(command.ClientId);
