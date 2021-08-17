@@ -1,8 +1,12 @@
-﻿using System.Collections;
+﻿#region
+
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Domain.BuildingBlocks;
+
+#endregion
 
 namespace Domain.Tests.Helpers
 {

@@ -1,5 +1,6 @@
-﻿using Application.Contracts;
-using Application.Queries;
+﻿#region
+
+using Application.Contracts;
 using Domain.Contracts;
 using Infrastructure.Database;
 using Infrastructure.Database.Implementations;
@@ -8,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+
+#endregion
 
 namespace WebApi.CompositionRoot
 {
@@ -31,11 +34,11 @@ namespace WebApi.CompositionRoot
                 dbOptions.EnableDetailedErrors();
                 dbOptions.UseLoggerFactory(loggerFactory);
 
-                dbOptions.UseSqlite(connectionString.Value.Default, 
+                dbOptions.UseSqlite(connectionString.Value.Default,
                     ops => ops.MigrationsAssembly(typeof(ApplicationContext).Assembly.FullName));
             });
-            
-            
+
+
             services.AddScoped<ISqlConnectionFactory, SqlLiteConnectionFactory>(provider =>
             {
                 var connectionStringOptions = provider.GetRequiredService<IOptions<ConnectionStringOptions>>();
@@ -45,11 +48,11 @@ namespace WebApi.CompositionRoot
 
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IClientQueryRepository, ClientQueryRepository>();
-            
+
             services.AddScoped<IDomainEventAccessor, DomainEventsAccessor>();
-            
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            
+
             return services;
         }
     }

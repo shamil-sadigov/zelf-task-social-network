@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using Domain.BuildingBlocks;
+
+#endregion
 
 namespace Application.Contracts
 {

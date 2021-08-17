@@ -1,10 +1,14 @@
-﻿using System.Linq;
+﻿#region
+
+using System.Linq;
 using Domain.Contracts;
 using Domain.ValueObjects;
 
+#endregion
+
 namespace Domain
 {
-    public class SubscriptionBasedPopularityEvaluator:IPopularityEvaluator
+    public class SubscriptionBasedPopularityEvaluator : IPopularityEvaluator
     {
         private readonly Client _client;
 
@@ -12,11 +16,11 @@ namespace Domain
         {
             _client = client;
         }
-        
+
         public ClientPopularity Evaluate()
         {
             var count = _client.Subscribers.Count(x => x.ClientId == _client.Id);
-            
+
             return new ClientPopularity((ushort) count);
         }
     }

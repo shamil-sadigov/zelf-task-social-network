@@ -15,9 +15,8 @@ namespace Domain.ValueObjects
         // for EF
         private ClientName()
         {
-            
         }
-        
+
         public ClientName(string name)
         {
             NameMustHaveValue(name);

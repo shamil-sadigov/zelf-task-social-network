@@ -1,5 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿#region
+
+using System.Threading.Tasks;
 using Domain.ValueObjects;
+
+#endregion
 
 namespace Domain.Contracts
 {

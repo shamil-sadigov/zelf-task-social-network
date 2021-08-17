@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using MediatR;
+
+#endregion
 
 namespace Application.Queries.GetTopPopularClients
 {

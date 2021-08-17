@@ -1,5 +1,9 @@
-﻿using System;
+﻿#region
+
+using System;
 using Microsoft.Extensions.Hosting;
+
+#endregion
 
 namespace WebApi
 {

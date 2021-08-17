@@ -1,8 +1,12 @@
+#region
+
 using FluentValidation;
+
+#endregion
 
 namespace Application.Commands.CreateClient
 {
-    public class CreateClientCommandValidator:AbstractValidator<CreateClientCommand>
+    public class CreateClientCommandValidator : AbstractValidator<CreateClientCommand>
     {
         public CreateClientCommandValidator()
         {

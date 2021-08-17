@@ -1,10 +1,13 @@
-﻿using System.Threading.Tasks;
-using Application;
+﻿#region
+
+using System.Threading.Tasks;
 using Application.Contracts;
+
+#endregion
 
 namespace Infrastructure.Database.Implementations
 {
-    public class UnitOfWork:IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationContext _context;
 
@@ -12,8 +15,8 @@ namespace Infrastructure.Database.Implementations
         {
             _context = context;
         }
-        
-        public async Task CommitAsync() 
+
+        public async Task CommitAsync()
             => await _context.SaveChangesAsync();
     }
 }

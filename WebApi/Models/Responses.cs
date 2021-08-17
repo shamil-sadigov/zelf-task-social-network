@@ -8,6 +8,6 @@ using System.Collections.Generic;
 namespace WebApi.Models
 {
     public record TopPopularClientsResponse(IReadOnlyCollection<ClientResponse> Items);
-    
+
     public record ClientResponse(Guid Id, string Name, ushort Popularity);
 }

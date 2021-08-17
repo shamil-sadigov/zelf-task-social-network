@@ -1,7 +1,11 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Queries;
+
+#endregion
 
 namespace Application.Contracts
 {

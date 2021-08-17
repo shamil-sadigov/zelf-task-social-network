@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using System.Linq;
-using Application;
 using Application.Contracts;
 using Domain.BuildingBlocks;
 using MoreLinq.Extensions;
+
+#endregion
 
 namespace Infrastructure.Database.Implementations
 {

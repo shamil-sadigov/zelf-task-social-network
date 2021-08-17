@@ -14,18 +14,18 @@ namespace Infrastructure.Database.Implementations
     {
         private readonly ApplicationContext _context;
 
-        public ClientRepository(ApplicationContext context) 
+        public ClientRepository(ApplicationContext context)
             => _context = context;
 
-        public async Task AddAsync(Client client) 
+        public async Task AddAsync(Client client)
             => await _context.AddAsync(client);
 
-        public async Task<Client> GetAsync(ClientId clientId) 
+        public async Task<Client> GetAsync(ClientId clientId)
             => await _context.Clients
                 .Include("_subscribers")
-                .FirstOrDefaultAsync(x=> x.Id == clientId);
+                .FirstOrDefaultAsync(x => x.Id == clientId);
 
-        public void Update(Client client) 
+        public void Update(Client client)
             => _context.Entry(client).CurrentValues.SetValues(client);
     }
 }

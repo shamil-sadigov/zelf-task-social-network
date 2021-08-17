@@ -1,4 +1,8 @@
-﻿using Domain.ValueObjects;
+﻿#region
+
+using Domain.ValueObjects;
+
+#endregion
 
 namespace Domain.Contracts
 {

@@ -13,7 +13,7 @@ namespace Infrastructure.Database
             : base(ops)
         {
         }
-        
+
         public DbSet<Client> Clients { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -1,5 +1,9 @@
-﻿using System;
+﻿#region
+
+using System;
 using MediatR;
+
+#endregion
 
 namespace Domain.BuildingBlocks
 {

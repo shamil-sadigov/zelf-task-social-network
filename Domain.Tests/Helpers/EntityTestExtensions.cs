@@ -1,6 +1,10 @@
-﻿using System.Linq;
+﻿#region
+
+using System.Linq;
 using Domain.BuildingBlocks;
 using FluentAssertions;
+
+#endregion
 
 namespace Domain.Tests.Helpers
 {

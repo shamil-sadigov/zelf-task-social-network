@@ -38,14 +38,14 @@ namespace WebApi.Controllers
 
             var result = await _mediator.Send(new GetClientQuery(createdClientId));
 
-            ClientResponse? response = MapToResponse(result!);
+            var response = MapToResponse(result!);
 
             return CreatedAtAction(
                 "GetClient",
                 new {id = createdClientId},
                 response);
         }
-        
+
         [ActionName("GetClient")]
         [HttpGet("{id:guid}")]
         [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(ClientResponse))]
@@ -55,9 +55,9 @@ namespace WebApi.Controllers
 
             if (result is null)
                 return NotFound();
-            
+
             var response = MapToResponse(result);
-            
+
             return response;
         }
 
@@ -74,7 +74,7 @@ namespace WebApi.Controllers
                 request.SubscriberId,
                 ClientId: id
             ));
-            
+
             return Ok();
         }
 
@@ -93,8 +93,8 @@ namespace WebApi.Controllers
             return response;
         }
 
-        
-        private static ClientResponse MapToResponse(ClientDto dto) 
+
+        private static ClientResponse MapToResponse(ClientDto dto)
             => new(dto.Id, dto.Name, dto.Popularity);
     }
 }

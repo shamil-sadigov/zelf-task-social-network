@@ -14,13 +14,12 @@ using Domain.ValueObjects;
 
 namespace Domain
 {
-    public class Client:Entity, IAggregateRoot
+    public class Client : Entity, IAggregateRoot
     {
+        private readonly ClientName _name;
         private readonly IPopularityEvaluator _popularityEvaluator;
-        
+
         private readonly List<ClientSubscriber> _subscribers = new();
-        
-        private ClientName _name;
         private ClientPopularity _popularity;
 
         // For EF
@@ -29,17 +28,17 @@ namespace Domain
             _popularityEvaluator = new SubscriptionBasedPopularityEvaluator(this);
         }
 
-        private Client(ClientName name) 
+        private Client(ClientName name)
             : this()
         {
             _name = name;
             Id = new ClientId(Guid.NewGuid());
-            
+
             AddDomainEvent(new ClientCreatedDomainEvent(Id, _name));
         }
-        
+
         internal IReadOnlyList<ClientSubscriber> Subscribers => _subscribers;
-        
+
         public ClientId Id { get; }
 
         public static async Task<Client> CreateWithNameAsync(ClientName name, IClientCounter clientCounter)
@@ -51,7 +50,7 @@ namespace Domain
 
             return new Client(name);
         }
-        
+
         public void AddSubscriber(Client subscriber)
         {
             SubscriberMustBeUnique(subscriber.Id);
@@ -59,11 +58,11 @@ namespace Domain
             AddSubscriberInternal(subscriber);
 
             EvaluatePopularity();
-            
+
             AddDomainEvent(new ClientSubscribedDomainEvent(subscriber.Id, Id, _popularity));
         }
 
-        private void EvaluatePopularity() 
+        private void EvaluatePopularity()
             => _popularity = _popularityEvaluator.Evaluate();
 
         private void AddSubscriberInternal(Client subscriber)
@@ -81,7 +80,7 @@ namespace Domain
                 .Any(x => x.SubscriberId == subscriber
                           && x.ClientId == Id);
 
-            if (subscriptionExists) 
+            if (subscriptionExists)
                 throw new DuplicateSubscriberException(subscriber, Id);
         }
     }

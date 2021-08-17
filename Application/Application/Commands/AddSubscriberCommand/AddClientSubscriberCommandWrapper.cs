@@ -1,4 +1,8 @@
+#region
+
 using Domain.ValueObjects;
+
+#endregion
 
 namespace Application.Commands.AddSubscriberCommand
 {
@@ -10,8 +14,7 @@ namespace Application.Commands.AddSubscriberCommand
             ClientId = new ClientId(command.ClientId);
         }
 
-        internal ClientId SubscriberId { get; } 
-        internal ClientId ClientId { get; } 
-        
+        internal ClientId SubscriberId { get; }
+        internal ClientId ClientId { get; }
     }
 }

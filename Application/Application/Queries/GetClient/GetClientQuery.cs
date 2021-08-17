@@ -1,6 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region
+
+using System;
 using MediatR;
+
+#endregion
 
 namespace Application.Queries.GetClient
 {

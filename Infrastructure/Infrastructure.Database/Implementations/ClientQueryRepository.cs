@@ -1,14 +1,14 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Contracts;
 using Application.Queries;
-using Application.Queries.GetTopPopularClients;
 using Dapper;
-using Domain;
-using Microsoft.EntityFrameworkCore;
-using MoreLinq;
+
+#endregion
 
 namespace Infrastructure.Database.Implementations
 {
@@ -24,49 +24,49 @@ namespace Infrastructure.Database.Implementations
         public async Task<List<ClientDto>> GetTopPopularAsync(ushort limit)
         {
             var connection = _sqlConnectionFactory.GetOrCreateConnection();
-            
-            var clients  = await connection.QueryAsync<ClientDbModel>(
-                "SELECT [Id], [Name], [Popularity]"+
+
+            var clients = await connection.QueryAsync<ClientDbModel>(
+                "SELECT [Id], [Name], [Popularity]" +
                 "FROM Clients" +
                 "ORDER BY [Popularity]" +
-                "LIMIT @Limit" , new
+                "LIMIT @Limit", new
                 {
-                    Limit = limit,
+                    Limit = limit
                 });
 
-             return clients
-                 .Select(x=> MapToDto(x))
-                 .ToList();
+            return clients
+                .Select(x => MapToDto(x))
+                .ToList();
         }
 
         public async Task<ClientDto?> GetByIdAsync(Guid clientId)
         {
             var connection = _sqlConnectionFactory.GetOrCreateConnection();
-            
-            var result  = await connection.QuerySingleOrDefaultAsync<ClientDbModel>(
-                "SELECT [Id], [Name], [Popularity]"+
+
+            var result = await connection.QuerySingleOrDefaultAsync<ClientDbModel>(
+                "SELECT [Id], [Name], [Popularity]" +
                 "FROM Clients " +
                 "WHERE [Id]=@ClientId", new
                 {
-                    ClientId = clientId.ToString().ToUpper(),
+                    ClientId = clientId.ToString().ToUpper()
                 });
 
             return result is null ? null : MapToDto(result);
         }
-        
+
+        private static ClientDto MapToDto(ClientDbModel model)
+            => new
+            (
+                Guid.Parse(model.Id),
+                model.Name,
+                model.Popularity
+            );
+
         private class ClientDbModel
         {
             public string Id { get; set; }
             public string Name { get; set; }
             public ushort Popularity { get; set; }
-        };
-
-        private static ClientDto MapToDto(ClientDbModel model)
-             => new
-             (
-                Guid.Parse(model.Id),
-                model.Name,
-                model.Popularity
-             );
+        }
     }
 }

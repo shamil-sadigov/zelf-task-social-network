@@ -1,8 +1,12 @@
-﻿using System;
+﻿#region
+
+using System;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using WebApi.IntegrationTests.Helpers;
+
+#endregion
 
 namespace WebApi.IntegrationTests.Extensions
 {

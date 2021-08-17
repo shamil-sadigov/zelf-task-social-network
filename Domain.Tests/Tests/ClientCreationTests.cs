@@ -22,7 +22,7 @@ namespace Domain.Tests.Tests
         {
             // Arrange
             var clientName = new ClientName("Firstname Lastname");
-            
+
             var clientCounter = Substitute.For<IClientCounter>();
             clientCounter.CountByNameAsync(clientName).Returns(1);
 

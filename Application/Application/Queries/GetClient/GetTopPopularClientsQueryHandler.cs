@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
+﻿#region
+
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Contracts;
 using MediatR;
 
+#endregion
+
 namespace Application.Queries.GetClient
 {
-    public class GetClientQueryHandler:IRequestHandler<GetClientQuery, ClientDto?>
+    public class GetClientQueryHandler : IRequestHandler<GetClientQuery, ClientDto?>
     {
         private readonly IClientQueryRepository _clientRepository;
 
@@ -14,11 +17,11 @@ namespace Application.Queries.GetClient
         {
             _clientRepository = clientRepository;
         }
-        
+
         public async Task<ClientDto?> Handle(GetClientQuery request, CancellationToken cancellationToken)
         {
-            ClientDto? result = await _clientRepository.GetByIdAsync(request.ClientId);
-            
+            var result = await _clientRepository.GetByIdAsync(request.ClientId);
+
             return result;
         }
     }

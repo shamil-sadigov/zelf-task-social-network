@@ -28,7 +28,6 @@ namespace Infrastructure.Database.Configurations
             builder.OwnsOne<ClientPopularity>("_popularity", ops =>
                 ops.Property(x => x.Value)
                     .HasColumnName("Popularity"));
-
         }
     }
 }

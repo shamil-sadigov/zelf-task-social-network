@@ -1,5 +1,9 @@
-﻿using Domain.BuildingBlocks;
+﻿#region
+
+using Domain.BuildingBlocks;
 using Domain.ValueObjects;
+
+#endregion
 
 namespace Domain.DomainEvents
 {

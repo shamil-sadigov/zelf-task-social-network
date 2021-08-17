@@ -1,5 +1,9 @@
+#region
+
 using System;
 using System.Data;
+
+#endregion
 
 namespace Infrastructure.Database
 {

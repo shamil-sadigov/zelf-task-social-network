@@ -1,10 +1,14 @@
-﻿using Application;
+﻿#region
+
+using Application;
 using Application.Contracts;
 using Application.Pipelines;
 using Domain.Contracts;
 using Infrastructure.Database.Implementations;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+
+#endregion
 
 namespace WebApi.CompositionRoot
 {

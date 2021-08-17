@@ -1,7 +1,11 @@
-﻿using System;
+﻿#region
+
+using System;
 using MediatR;
+
+#endregion
 
 namespace Application.Commands.AddSubscriberCommand
 {
-    public record AddClientSubscriberCommand(Guid SubscriberId, Guid ClientId):IRequest<Unit>;
+    public record AddClientSubscriberCommand(Guid SubscriberId, Guid ClientId) : IRequest<Unit>;
 }

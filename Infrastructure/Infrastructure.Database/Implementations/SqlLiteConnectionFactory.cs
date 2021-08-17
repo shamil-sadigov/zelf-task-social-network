@@ -1,5 +1,9 @@
+#region
+
 using System.Data;
 using Microsoft.Data.Sqlite;
+
+#endregion
 
 namespace Infrastructure.Database.Implementations
 {

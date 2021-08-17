@@ -1,10 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿#region
+
+using System.Threading.Tasks;
 using Domain;
 using Infrastructure.Database;
 
+#endregion
+
 namespace WebApi.IntegrationTests.Helpers
 {
-    public class ClientSeeder:IDataSeeder
+    public class ClientSeeder : IDataSeeder
     {
         private readonly Client[] _clients;
 
@@ -12,7 +16,7 @@ namespace WebApi.IntegrationTests.Helpers
         {
             _clients = clients;
         }
-        
+
         public async Task Seed(ApplicationContext dbContext)
         {
             await dbContext.Clients.AddRangeAsync(_clients);

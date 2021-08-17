@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 namespace Application.Pipelines
 {
     public class ValidationPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest: notnull
+        where TRequest : notnull
     {
         private readonly ILogger<ValidationPipeline<TRequest, TResponse>> _logger;
         private readonly IEnumerable<IValidator<TRequest>> _validators;

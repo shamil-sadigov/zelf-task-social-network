@@ -27,12 +27,12 @@ namespace Domain.Tests.Tests
                 .Throw<ArgumentException>()
                 .WithMessageLike("Name length should be between 2 and 64");
         }
-        
+
         [Fact]
         public void Cannot_create_clientName_when_value_is_more_than_64_characters()
         {
             var value = new string('-', 65);
-            
+
             Action clientNameCreation = () =>
             {
                 var clientName = new ClientName(value);

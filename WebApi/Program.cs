@@ -1,5 +1,9 @@
+#region
+
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+
+#endregion
 
 namespace WebApi
 {
@@ -12,9 +16,6 @@ namespace WebApi
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#region
+
 using System.IO;
 using Infrastructure.Database;
 using Microsoft.AspNetCore.Hosting;
@@ -7,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebApi.IntegrationTests.Extensions;
 using WebApi.IntegrationTests.Helpers;
+
+#endregion
 
 namespace WebApi.IntegrationTests
 {
@@ -22,10 +25,7 @@ namespace WebApi.IntegrationTests
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-            builder.ConfigureAppConfiguration(ops =>
-            {
-                ops.AddJsonFile("appsettings.testing.json");
-            });
+            builder.ConfigureAppConfiguration(ops => { ops.AddJsonFile("appsettings.testing.json"); });
 
             builder.UseEnvironment("testing");
 

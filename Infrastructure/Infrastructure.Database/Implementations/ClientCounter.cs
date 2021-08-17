@@ -1,11 +1,15 @@
-﻿using System.Threading.Tasks;
+﻿#region
+
+using System.Threading.Tasks;
 using Dapper;
 using Domain.Contracts;
 using Domain.ValueObjects;
 
+#endregion
+
 namespace Infrastructure.Database.Implementations
 {
-    public class ClientCounter:IClientCounter
+    public class ClientCounter : IClientCounter
     {
         private readonly ISqlConnectionFactory _sqlConnectionFactory;
 
@@ -16,11 +20,11 @@ namespace Infrastructure.Database.Implementations
         {
             var connection = _sqlConnectionFactory.GetOrCreateConnection();
 
-            int clientCount = await connection.QuerySingleOrDefaultAsync<int>(
+            var clientCount = await connection.QuerySingleOrDefaultAsync<int>(
                 "SELECT COUNT(Id) FROM clients " +
                 "WHERE [Name]=@Name", new
                 {
-                    Name = name.Value,
+                    Name = name.Value
                 });
 
             return clientCount;

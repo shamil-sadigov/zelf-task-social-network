@@ -1,7 +1,11 @@
-﻿using System;
+﻿#region
+
+using System;
 using MediatR;
+
+#endregion
 
 namespace Application.Commands.CreateClient
 {
-    public record CreateClientCommand(string ClientName):IRequest<Guid>;
+    public record CreateClientCommand(string ClientName) : IRequest<Guid>;
 }

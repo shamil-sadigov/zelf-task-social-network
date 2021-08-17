@@ -1,6 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿#region
+
+using System.Threading.Tasks;
 using Application.Contracts;
 using MediatR;
+
+#endregion
 
 namespace Application
 {

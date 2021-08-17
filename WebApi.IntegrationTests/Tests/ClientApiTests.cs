@@ -1,3 +1,5 @@
+#region
+
 using System;
 using System.Net;
 using System.Net.Http;
@@ -13,9 +15,11 @@ using WebApi.IntegrationTests.Helpers;
 using WebApi.Models;
 using Xunit;
 
+#endregion
+
 namespace WebApi.IntegrationTests.Tests
 {
-    public class ClientApiTests:IClassFixture<ClientsWebApplicationFactory>
+    public class ClientApiTests : IClassFixture<ClientsWebApplicationFactory>
     {
         private readonly ClientsWebApplicationFactory _webApiFactory;
 
@@ -23,48 +27,48 @@ namespace WebApi.IntegrationTests.Tests
         {
             _webApiFactory = webApiFactory;
         }
-        
+
         [Fact]
         public async Task POST_Creates_new_client()
         {
             // Arrange
             HttpClient clientApi = _webApiFactory.CreateDefaultClient(new Uri(ClientsApiPath.BaseUrl));
-            
+
             var clientName = "Gordon Lightfoot";
-            
+
             // Act
             var httpResponse = await clientApi.CreateClientAsync(clientName);
-            
+
             // Assert
             httpResponse.StatusCode.Should().Be(HttpStatusCode.Created);
-            
+
             var clientDto = await httpResponse.Content.ReadFromJsonAsync<ClientResponse>();
-            
+
             clientDto!.Name.Should().Be(clientName);
         }
-        
-        
+
+
         [Fact]
         public async Task POST_Add_subscriber_to_client()
         {
             var client = await CreateClientAsync("Gordon Lightfoot");
             var subscriber = await CreateClientAsync("Fleetwood mac");
-            
+
             var clientSeeder = new ClientSeeder(client, subscriber);
-            
+
             // Arrange
             HttpClient clientApi = _webApiFactory
                 .WithPredefinedData(clientSeeder)
                 .CreateDefaultClient(new Uri(ClientsApiPath.BaseUrl));
-            
+
             // Act
-            HttpResponseMessage httpResponse =  await clientApi.AddClientSubscriberAsync(client.Id, subscriber.Id);
-            
+            HttpResponseMessage httpResponse = await clientApi.AddClientSubscriberAsync(client.Id, subscriber.Id);
+
             httpResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
         // TODO: Add additional tests to get top popular clients
-        
+
         private static async Task<Client> CreateClientAsync(string name)
         {
             var clientCounter = Substitute.For<IClientCounter>();

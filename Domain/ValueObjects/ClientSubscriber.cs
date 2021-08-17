@@ -1,15 +1,18 @@
-﻿using Domain.BuildingBlocks;
+﻿#region
+
+using Domain.BuildingBlocks;
+
+#endregion
 
 namespace Domain.ValueObjects
 {
-    public class ClientSubscriber:Entity
+    public class ClientSubscriber : Entity
     {
         // For EF
         private ClientSubscriber()
         {
-            
         }
-        
+
         private ClientSubscriber(ClientId subscriberId, ClientId clientId)
         {
             SubscriberId = subscriberId;
@@ -19,7 +22,7 @@ namespace Domain.ValueObjects
         public ClientId SubscriberId { get; }
 
         public ClientId ClientId { get; }
-        
+
         public class Builder
         {
             private readonly ClientId _subscriber;

@@ -23,9 +23,9 @@ namespace Domain.Tests.Tests
             // Arrange
             var client = await CreateClientAsync();
             var subscriber = await CreateClientAsync();
-            
+
             var expectedClientPopularity = new ClientPopularity(1);
-                
+
             // Act
             client.AddSubscriber(subscriber);
 
@@ -34,15 +34,15 @@ namespace Domain.Tests.Tests
 
             domainEvent.ClientId.Should()
                 .Be(client.Id);
-            
+
             domainEvent.SubscriberId.Should()
                 .Be(subscriber.Id);
-            
+
             domainEvent.ClientPopularity.Should()
                 .Be(expectedClientPopularity);
         }
-        
-        
+
+
         [Theory]
         [InlineData(5, 6)]
         [InlineData(10, 11)]
@@ -53,11 +53,11 @@ namespace Domain.Tests.Tests
         {
             // Arrange
             var client = await CreateClientWithSubscribers(numberOfSubscribers);
-            
+
             var subscriber = await CreateClientAsync();
 
             var expectedClientPopularity = new ClientPopularity(expectedPopularityInt);
-            
+
             // Act
             client.AddSubscriber(subscriber);
 
@@ -66,24 +66,24 @@ namespace Domain.Tests.Tests
 
             domainEvent.ClientId.Should()
                 .Be(client.Id);
-            
+
             domainEvent.SubscriberId.Should()
                 .Be(subscriber.Id);
-            
+
             domainEvent.ClientPopularity.Should()
                 .Be(expectedClientPopularity);
         }
-        
+
         [Fact]
         public async Task Cannot_subscribe_to_client_when_subscriber_has_been_already_subscribed()
         {
             // Arrange
             var client = await CreateClientAsync();
-            
+
             var subscriber = await CreateClientAsync();
-            
+
             client.AddSubscriber(subscriber);
-            
+
             // Act
             Action addingTheSameSubscriber = () => client.AddSubscriber(subscriber);
 
@@ -97,29 +97,29 @@ namespace Domain.Tests.Tests
         {
             var client = await CreateClientAsync();
 
-            for (int i = 0; i < subscriberCount; i++)
+            for (var i = 0; i < subscriberCount; i++)
             {
                 var subscriber = await CreateClientAsync();
-                
+
                 client.AddSubscriber(subscriber);
             }
-            
+
             client.ClearDomainEvents();
 
             return client;
         }
-        
+
         private static async Task<Client> CreateClientAsync()
         {
             var clientName = new ClientName("Firstname Lastname");
 
             var clientCounter = Substitute.For<IClientCounter>();
-             clientCounter.CountByNameAsync(clientName).Returns(0);
+            clientCounter.CountByNameAsync(clientName).Returns(0);
 
             var client = await Client.CreateWithNameAsync(clientName, clientCounter);
-            
+
             client.ClearDomainEvents();
-            
+
             return client;
         }
 
