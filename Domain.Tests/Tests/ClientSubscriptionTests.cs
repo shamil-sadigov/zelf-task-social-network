@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Threading.Tasks;
 using Domain.Contracts;
 using Domain.DomainEvents;
 using Domain.Exceptions;
@@ -17,11 +18,11 @@ namespace Domain.Tests.Tests
     public class ClientSubscriptionTests
     {
         [Fact]
-        public void Can_subscribe_to_new_client()
+        public async Task Can_subscribe_to_new_client()
         {
             // Arrange
-            var client = CreateClient();
-            var subscriber = CreateClient();
+            var client = await CreateClientAsync();
+            var subscriber = await CreateClientAsync();
             
             var expectedClientPopularity = new ClientPopularity(1);
                 
@@ -46,14 +47,14 @@ namespace Domain.Tests.Tests
         [InlineData(5, 6)]
         [InlineData(10, 11)]
         [InlineData(150, 151)]
-        public void Can_subscribe_to_client_who_already_has_several_subscribers(
+        public async Task Can_subscribe_to_client_who_already_has_several_subscribers(
             int numberOfSubscribers,
             uint expectedPopularityInt)
         {
             // Arrange
-            var client = CreateClientWithSubscribers(numberOfSubscribers);
+            var client = await CreateClientWithSubscribers(numberOfSubscribers);
             
-            var subscriber = CreateClient();
+            var subscriber = await CreateClientAsync();
 
             var expectedClientPopularity = new ClientPopularity(expectedPopularityInt);
             
@@ -74,12 +75,12 @@ namespace Domain.Tests.Tests
         }
         
         [Fact]
-        public void Cannot_subscribe_to_client_when_subscriber_has_been_already_subscribed()
+        public async Task Cannot_subscribe_to_client_when_subscriber_has_been_already_subscribed()
         {
             // Arrange
-            var client = CreateClient();
+            var client = await CreateClientAsync();
             
-            var subscriber = CreateClient();
+            var subscriber = await CreateClientAsync();
             
             client.AddSubscriber(subscriber);
             
@@ -92,13 +93,13 @@ namespace Domain.Tests.Tests
 
         #region Helpers
 
-        private static Client CreateClientWithSubscribers(int subscriberCount)
+        private static async Task<Client> CreateClientWithSubscribers(int subscriberCount)
         {
-            var client = CreateClient();
+            var client = await CreateClientAsync();
 
             for (int i = 0; i < subscriberCount; i++)
             {
-                var subscriber = CreateClient();
+                var subscriber = await CreateClientAsync();
                 
                 client.AddSubscriber(subscriber);
             }
@@ -108,15 +109,14 @@ namespace Domain.Tests.Tests
             return client;
         }
         
-        private static Client CreateClient()
+        private static async Task<Client> CreateClientAsync()
         {
-            // Arrange
             var clientName = new ClientName("Firstname Lastname");
 
             var clientCounter = Substitute.For<IClientCounter>();
-            clientCounter.CountByName(clientName).Returns(0);
+             clientCounter.CountByNameAsync(clientName).Returns(0);
 
-            var client = Client.WithName(clientName, clientCounter);
+            var client = await Client.CreateWithNameAsync(clientName, clientCounter);
             
             client.ClearDomainEvents();
             

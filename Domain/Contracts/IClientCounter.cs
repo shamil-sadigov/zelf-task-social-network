@@ -1,9 +1,10 @@
-﻿using Domain.ValueObjects;
+﻿using System.Threading.Tasks;
+using Domain.ValueObjects;
 
 namespace Domain.Contracts
 {
     public interface IClientCounter
     {
-        int CountByName(ClientName name);
+        Task<int> CountByNameAsync(ClientName name);
     }
 }

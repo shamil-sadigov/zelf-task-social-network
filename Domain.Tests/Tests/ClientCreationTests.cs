@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Threading.Tasks;
 using Domain.Contracts;
 using Domain.DomainEvents;
 using Domain.Exceptions;
@@ -23,12 +24,12 @@ namespace Domain.Tests.Tests
             var clientName = new ClientName("Firstname Lastname");
             
             var clientCounter = Substitute.For<IClientCounter>();
-            clientCounter.CountByName(clientName).Returns(1);
+            clientCounter.CountByNameAsync(clientName).Returns(1);
 
             // Act
             Action clientCreation = () =>
             {
-                var client = Client.WithName(clientName, clientCounter);
+                var client = Client.CreateWithNameAsync(clientName, clientCounter);
             };
 
             // Assert
@@ -37,16 +38,16 @@ namespace Domain.Tests.Tests
         }
 
         [Fact]
-        public void Can_create_client_when_clientName_is_unique()
+        public async Task Can_create_client_when_clientName_is_unique()
         {
             // Arrange
             var clientName = new ClientName("Firstname Lastname");
 
             var clientCounter = Substitute.For<IClientCounter>();
-            clientCounter.CountByName(clientName).Returns(0);
+            clientCounter.CountByNameAsync(clientName).Returns(0);
 
             // Act
-            var client = Client.WithName(clientName, clientCounter);
+            var client = await Client.CreateWithNameAsync(clientName, clientCounter);
 
             // Assert
             var domainEvent = client.ShouldHavePublishedDomainEvent<ClientCreatedDomainEvent>();

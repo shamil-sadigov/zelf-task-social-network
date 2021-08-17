@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Domain.BuildingBlocks;
 using Domain.Contracts;
 using Domain.DomainEvents;
@@ -41,9 +42,9 @@ namespace Domain
         
         public ClientId Id { get; }
 
-        public static Client WithName(ClientName name, IClientCounter clientCounter)
+        public static async Task<Client> CreateWithNameAsync(ClientName name, IClientCounter clientCounter)
         {
-            var numberOfExistingClients = clientCounter.CountByName(name);
+            var numberOfExistingClients = await clientCounter.CountByNameAsync(name);
 
             if (numberOfExistingClients > 0)
                 throw new DuplicateClientNameException(name);
