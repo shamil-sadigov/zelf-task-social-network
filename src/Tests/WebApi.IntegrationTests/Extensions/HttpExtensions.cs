@@ -52,7 +52,7 @@ namespace WebApi.IntegrationTests.Extensions
             return response;
         }
         
-        public static async Task<HttpResponseMessage> GetClientSubscriberAsync(
+        public static async Task<HttpResponseMessage> GetClientSubscribersAsync(
             this HttpClient httpClient,
             Guid clientId)
         {

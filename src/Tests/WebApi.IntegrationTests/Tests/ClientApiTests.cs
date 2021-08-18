@@ -70,7 +70,7 @@ namespace WebApi.IntegrationTests.Tests
             addFirstSubscriberResponse.ShouldBe200();
             addSecondSubscriberResponse.ShouldBe200();
             
-            var response = await clientApi.GetClientSubscriberAsync(client.Id);
+            var response = await clientApi.GetClientSubscribersAsync(client.Id);
 
             response.ShouldBe200();
 
