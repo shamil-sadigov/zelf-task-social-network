@@ -18,7 +18,7 @@ namespace Domain.Tests.Tests
     public class ClientCreationTests
     {
         [Fact]
-        public void Cannot_create_client_when_clientName_is_not_unique()
+        public async Task Cannot_create_client_when_clientName_is_not_unique()
         {
             // Arrange
             var clientName = new ClientName("Firstname Lastname");
@@ -33,7 +33,7 @@ namespace Domain.Tests.Tests
             };
 
             // Assert
-            clientCreation.Should()
+            await clientCreation.Should()
                 .ThrowAsync<DuplicateClientNameException>();
         }
 
