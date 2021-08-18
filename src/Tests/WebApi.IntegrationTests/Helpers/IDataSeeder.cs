@@ -9,6 +9,6 @@ namespace WebApi.IntegrationTests.Helpers
 {
     public interface IDataSeeder
     {
-        Task Seed(ApplicationContext dbContext);
+        void Seed(ApplicationContext dbContext);
     }
 }

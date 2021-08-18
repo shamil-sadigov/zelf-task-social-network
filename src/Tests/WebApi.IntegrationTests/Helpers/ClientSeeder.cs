@@ -17,11 +17,10 @@ namespace WebApi.IntegrationTests.Helpers
             _clients = clients;
         }
 
-        public async Task Seed(ApplicationContext dbContext)
+        public void Seed(ApplicationContext dbContext)
         {
-            await dbContext.Clients.AddRangeAsync(_clients);
-
-            await dbContext.SaveChangesAsync();
+            dbContext.Clients.AddRange(_clients);
+            dbContext.SaveChanges();
         }
     }
 }

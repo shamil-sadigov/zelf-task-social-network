@@ -9,5 +9,5 @@ namespace WebApi.Models
 {
     public record ClientsResponse(IReadOnlyCollection<ClientResponse> Items);
 
-    public record ClientResponse(Guid Id, string Name, ushort Popularity);
+    public record ClientResponse(Guid Id, string Name, uint Popularity);
 }
