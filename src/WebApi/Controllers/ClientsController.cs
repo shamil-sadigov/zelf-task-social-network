@@ -50,6 +50,7 @@ namespace WebApi.Controllers
         [ActionName("GetClient")]
         [HttpGet("{id:guid}")]
         [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(ClientResponse))]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
         public async Task<ActionResult<ClientResponse>> GetClientAsync(Guid id)
         {
             var result = await _mediator.Send(new GetClientQuery(id));
