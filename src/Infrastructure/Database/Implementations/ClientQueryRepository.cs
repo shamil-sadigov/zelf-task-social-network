@@ -26,9 +26,9 @@ namespace Infrastructure.Database.Implementations
             var connection = _sqlConnectionFactory.GetOrCreateConnection();
 
             var clients = await connection.QueryAsync<ClientDbModel>(
-                "SELECT [Id], [Name], [Popularity]" +
-                "FROM Clients " +
-                "ORDER BY [Popularity] DESC LIMIT @Limit", new
+                @"SELECT [Id], [Name], [Popularity]
+                  FROM Clients
+                  ORDER BY [Popularity] DESC LIMIT @Limit", new
                 {
                     Limit = limit
                 });
@@ -41,9 +41,9 @@ namespace Infrastructure.Database.Implementations
             var connection = _sqlConnectionFactory.GetOrCreateConnection();
 
             var result = await connection.QuerySingleOrDefaultAsync<ClientDbModel>(
-                "SELECT [Id], [Name], [Popularity]" +
-                "FROM Clients " +
-                "WHERE [Id]=@ClientId", new
+               @"SELECT [Id], [Name], [Popularity]
+                 FROM Clients
+                 WHERE [Id]=@ClientId", new
                 {
                     ClientId = clientId.ToString().ToUpper()
                 });
