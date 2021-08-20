@@ -16,8 +16,6 @@ namespace WebApi.CompositionRoot
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddTransient<IClientCounter, ClientCounter>();
-
             services.AddScoped<IDomainEventsPublisher, DomainEventsPublisher>();
 
             services.AddMediatR(typeof(DomainEventsPublisher));

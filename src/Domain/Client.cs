@@ -34,21 +34,16 @@ namespace Domain
             _name = name;
             Id = new ClientId(Guid.NewGuid());
 
-            AddDomainEvent(new ClientCreatedDomainEvent(Id, _name));
+            AddDomainEvent(new ClientCreatedDomainEvent(Id, _name));    
         }
 
         internal IReadOnlyList<ClientSubscriber> Subscribers => _subscribers;
 
         public ClientId Id { get; }
 
-        public static async Task<Client> CreateWithNameAsync(ClientName name, IClientCounter clientCounter)
+        public static Client CreateWithName(ClientName name)
         {
-            var numberOfExistingClients = await clientCounter.CountByNameAsync(name);
-
-            if (numberOfExistingClients > 0)
-                throw new DuplicateClientNameException(name);
-
-            return new Client(name);
+            return new(name);
         }
 
         public void AddSubscriber(Client subscriber)

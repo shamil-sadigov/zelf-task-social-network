@@ -18,36 +18,13 @@ namespace Domain.Tests.Tests
     public class ClientCreationTests
     {
         [Fact]
-        public async Task Cannot_create_client_when_clientName_is_not_unique()
+        public void Can_create_client()
         {
             // Arrange
             var clientName = new ClientName("Firstname Lastname");
-
-            var clientCounter = Substitute.For<IClientCounter>();
-            clientCounter.CountByNameAsync(clientName).Returns(1);
-
+            
             // Act
-            Func<Task> clientCreation = async () =>
-            {
-                var client = await Client.CreateWithNameAsync(clientName, clientCounter);
-            };
-
-            // Assert
-            await clientCreation.Should()
-                .ThrowAsync<DuplicateClientNameException>();
-        }
-
-        [Fact]
-        public async Task Can_create_client_when_clientName_is_unique()
-        {
-            // Arrange
-            var clientName = new ClientName("Firstname Lastname");
-
-            var clientCounter = Substitute.For<IClientCounter>();
-            clientCounter.CountByNameAsync(clientName).Returns(0);
-
-            // Act
-            var client = await Client.CreateWithNameAsync(clientName, clientCounter);
+            var client = Client.CreateWithName(clientName);
 
             // Assert
             var domainEvent = client.ShouldHavePublishedDomainEvent<ClientCreatedDomainEvent>();

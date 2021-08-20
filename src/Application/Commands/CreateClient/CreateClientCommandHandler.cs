@@ -14,20 +14,18 @@ namespace Application.Commands.CreateClient
 {
     public class CreateClientCommandHandler : IRequestHandler<CreateClientCommand, Guid>
     {
-        private readonly IClientCounter _clientCounter;
         private readonly IClientRepository _clientRepository;
 
-        public CreateClientCommandHandler(IClientRepository clientRepository, IClientCounter clientCounter)
+        public CreateClientCommandHandler(IClientRepository clientRepository)
         {
             _clientRepository = clientRepository;
-            _clientCounter = clientCounter;
         }
 
         public async Task<Guid> Handle(CreateClientCommand request, CancellationToken cancellationToken)
         {
             var clientName = new ClientName(request.ClientName);
 
-            var createdClient = await Client.CreateWithNameAsync(clientName, _clientCounter);
+            var createdClient = Client.CreateWithName(clientName);
 
             await _clientRepository.AddAsync(createdClient);
 

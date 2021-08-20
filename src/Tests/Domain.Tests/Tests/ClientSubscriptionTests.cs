@@ -18,11 +18,11 @@ namespace Domain.Tests.Tests
     public class ClientSubscriptionTests
     {
         [Fact]
-        public async Task Can_subscribe_to_new_client()
+        public void Can_subscribe_to_new_client()
         {
             // Arrange
-            var client = await CreateClientAsync();
-            var subscriber = await CreateClientAsync();
+            var client =  CreateClient();
+            var subscriber =  CreateClient();
 
             var expectedClientPopularity = new ClientPopularity(1);
 
@@ -47,14 +47,14 @@ namespace Domain.Tests.Tests
         [InlineData(5, 6)]
         [InlineData(10, 11)]
         [InlineData(150, 151)]
-        public async Task Can_subscribe_to_client_who_already_has_several_subscribers(
+        public void Can_subscribe_to_client_who_already_has_several_subscribers(
             int numberOfSubscribers,
             uint expectedPopularityInt)
         {
             // Arrange
-            var client = await CreateClientWithSubscribers(numberOfSubscribers);
+            var client = CreateClientWithSubscribers(numberOfSubscribers);
 
-            var subscriber = await CreateClientAsync();
+            var subscriber =  CreateClient();
 
             var expectedClientPopularity = new ClientPopularity(expectedPopularityInt);
 
@@ -75,12 +75,12 @@ namespace Domain.Tests.Tests
         }
 
         [Fact]
-        public async Task Cannot_subscribe_to_client_when_subscriber_has_been_already_subscribed()
+        public void Cannot_subscribe_to_client_when_subscriber_has_been_already_subscribed()
         {
             // Arrange
-            var client = await CreateClientAsync();
+            var client = CreateClient();
 
-            var subscriber = await CreateClientAsync();
+            var subscriber = CreateClient();
 
             client.AddSubscriber(subscriber);
 
@@ -94,10 +94,10 @@ namespace Domain.Tests.Tests
         
         
         [Fact]
-        public async Task Cannot_subscribe_client_to_itself()
+        public void Cannot_subscribe_client_to_itself()
         {
             // Arrange
-            var client = await CreateClientAsync();
+            var client = CreateClient();
             
             // Act
             Action addingTheSameSubscriber = () => client.AddSubscriber(client);
@@ -110,13 +110,13 @@ namespace Domain.Tests.Tests
 
         #region Helpers
 
-        private static async Task<Client> CreateClientWithSubscribers(int subscriberCount)
+        private static Client CreateClientWithSubscribers(int subscriberCount)
         {
-            var client = await CreateClientAsync();
+            var client = CreateClient();
 
             for (var i = 0; i < subscriberCount; i++)
             {
-                var subscriber = await CreateClientAsync();
+                var subscriber = CreateClient();
 
                 client.AddSubscriber(subscriber);
             }
@@ -126,14 +126,11 @@ namespace Domain.Tests.Tests
             return client;
         }
 
-        private static async Task<Client> CreateClientAsync()
+        private static Client CreateClient()
         {
             var clientName = new ClientName("Firstname Lastname");
-
-            var clientCounter = Substitute.For<IClientCounter>();
-            clientCounter.CountByNameAsync(clientName).Returns(0);
-
-            var client = await Client.CreateWithNameAsync(clientName, clientCounter);
+            
+            var client = Client.CreateWithName(clientName);
 
             client.ClearDomainEvents();
 

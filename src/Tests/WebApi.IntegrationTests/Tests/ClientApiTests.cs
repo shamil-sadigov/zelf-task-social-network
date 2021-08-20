@@ -52,9 +52,9 @@ namespace WebApi.IntegrationTests.Tests
         public async Task Can_add_subscribers_to_client()
         {
             // Arrange
-            var client = await CreateClientAsync("Eric Clapton");
-            var subscriber1 = await CreateClientAsync("Fleetwood mac");
-            var subscriber2 = await CreateClientAsync("Jim Croce");
+            var client = CreateClient("Eric Clapton");
+            var subscriber1 = CreateClient("Fleetwood mac");
+            var subscriber2 = CreateClient("Jim Croce");
 
             var clientSeeder = new ClientSeeder(client, subscriber1, subscriber2);
             
@@ -91,17 +91,11 @@ namespace WebApi.IntegrationTests.Tests
 
         // TODO: Add additional tests to get top popular clients
 
-        private static async Task<Client> CreateClientAsync(string name)
+        private static Client CreateClient(string name)
         {
-            var clientCounter = Substitute.For<IClientCounter>();
-
             var clientName = new ClientName(name);
 
-            clientCounter
-                .CountByNameAsync(clientName)
-                .Returns(0);
-
-            var client = await Client.CreateWithNameAsync(clientName, clientCounter);
+            var client = Client.CreateWithName(clientName);
             return client;
         }
     }
