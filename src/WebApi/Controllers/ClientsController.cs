@@ -79,18 +79,18 @@ namespace WebApi.Controllers
             return Ok();
         }
         
-        
         [HttpGet("{id:guid}/subscribers")]
         [ProducesResponseType((int) HttpStatusCode.OK)]
         public async Task<ClientsResponse> GetClientSubscribersAsync(Guid id)
         {
             var result = await _mediator.Send(new GetClientSubscribersQuery(id));
 
+            if (result is null)
+                return new ClientsResponse(Enumerable.Empty<ClientResponse>());
+
             var clients = result.Select(x => MapToResponse(x));
 
-            var response = new ClientsResponse(clients);
-
-            return response;
+            return new ClientsResponse(clients);
         }
         
         [HttpGet("top-popular/{limit:int?}")]
@@ -99,6 +99,9 @@ namespace WebApi.Controllers
         {
             var result = await _mediator.Send(new GetTopPopularClientsQuery(limit));
 
+            if (result is null)
+                return new ClientsResponse(Enumerable.Empty<ClientResponse>());
+            
             var clients = result.Select(x => MapToResponse(x));
 
             var response = new ClientsResponse(clients);

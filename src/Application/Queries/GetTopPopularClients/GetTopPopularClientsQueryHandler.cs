@@ -11,7 +11,7 @@ using MediatR;
 namespace Application.Queries.GetTopPopularClients
 {
     public class
-        GetTopPopularClientsQueryHandler : IRequestHandler<GetTopPopularClientsQuery, IReadOnlyCollection<ClientDto>>
+        GetTopPopularClientsQueryHandler : IRequestHandler<GetTopPopularClientsQuery, IReadOnlyCollection<ClientDto>?>
     {
         private readonly IClientQueryRepository _clientRepository;
 
@@ -20,7 +20,7 @@ namespace Application.Queries.GetTopPopularClients
             _clientRepository = clientRepository;
         }
 
-        public async Task<IReadOnlyCollection<ClientDto>> Handle(
+        public async Task<IReadOnlyCollection<ClientDto>?> Handle(
             GetTopPopularClientsQuery request,
             CancellationToken cancellationToken)
         {

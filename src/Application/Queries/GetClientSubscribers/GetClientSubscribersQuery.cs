@@ -8,5 +8,5 @@ using MediatR;
 
 namespace Application.Queries.GetClientSubscribers
 {
-    public record GetClientSubscribersQuery(Guid ClientId) : IRequest<List<ClientDto>>;
+    public record GetClientSubscribersQuery(Guid ClientId) : IRequest<IReadOnlyCollection<ClientDto>?>;
 }
