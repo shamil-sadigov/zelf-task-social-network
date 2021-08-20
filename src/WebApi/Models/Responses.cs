@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace WebApi.Models
 {
-    public record ClientsResponse(IReadOnlyCollection<ClientResponse> Items);
+    public record ClientsResponse(IEnumerable<ClientResponse> Items);
 
     public record ClientResponse(Guid Id, string Name, uint Popularity);
 }
