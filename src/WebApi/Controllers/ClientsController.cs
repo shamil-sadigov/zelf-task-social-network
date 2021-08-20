@@ -47,7 +47,6 @@ namespace WebApi.Controllers
                 response);
         }
 
-        [ActionName("GetClient")]
         [HttpGet("{id:guid}")]
         [ProducesResponseType((int) HttpStatusCode.OK, Type = typeof(ClientResponse))]
         [ProducesResponseType((int) HttpStatusCode.NotFound)]
