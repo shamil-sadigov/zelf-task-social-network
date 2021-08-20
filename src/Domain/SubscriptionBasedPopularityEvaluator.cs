@@ -21,7 +21,7 @@ namespace Domain
         {
             var count = _client.Subscribers.Count(x => x.ClientId == _client.Id);
 
-            return new ClientPopularity((ushort) count);
+            return new ClientPopularity((uint) count);
         }
     }
 }
